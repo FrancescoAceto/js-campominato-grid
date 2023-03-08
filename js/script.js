@@ -3,6 +3,8 @@ let DifficultyEL = document.getElementById("Difficulty");
 
 const PlayButtonEL = document.getElementById("play")
 PlayButtonEL.addEventListener("click", function () {
+
+    gridEL.innerText = "";
     
     const cellNumber = getCellNumber(DifficultyEL.value);
     console.log(cellNumber);
@@ -11,6 +13,8 @@ PlayButtonEL.addEventListener("click", function () {
     console.log(bombs);
 
     GenerateGrid(gridEL, cellNumber, bombs);
+
+    
 });
 
 
@@ -30,18 +34,35 @@ function getCellNumber(difficulty) {
     }
 }
 
-function GenerateGrid(gridContainerEL, cellNumber, bombs) {
+function GenerateGrid(gridContainerElement, cellNumber, bombs) {
     
-    for (let i = 0; i < cellNumber; i++) {
+    for (let i = 1; i <= cellNumber; i++) {
        
         let newElement = document.createElement("div")
 
         newElement.className = "square";
 
-        gridcontainerEL.append(newElement);
+        newElement.style.width = ` calc(100% / ${Math.sqrt(cellNumber)})`;
+        newElement.style.height = ` calc(100% / ${Math.sqrt(cellNumber)})`;
+
+        newElement.innerText = i
+
+        gridContainerElement.append(newElement);
+
+        newElement.addEventListener("click", function() {
+            
+            cellClick(newElement);
+
+        });
         
     }
 }
+
+function cellClick (cellElement){
+
+   cellElement.classList.add("empty") 
+}
+
 
 function generateBombs(quantity, maxNumber) {
     
